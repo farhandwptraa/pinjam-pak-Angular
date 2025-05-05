@@ -1,0 +1,69 @@
+<div class="panel mt-6 pb-0">
+    <h5 class="mb-5 text-lg font-semibold dark:text-white-light">List Pengajuan Siap Dicairkan</h5>
+    <div class="datatable">
+      <ng-datatable
+        [rows]="rows"
+        [columns]="cols"
+        [sortable]="true"
+        [loading]="loading"
+        skin="whitespace-nowrap bh-table-hover"
+        firstArrow='<svg width="24" height="24" ...>...</svg>'
+        lastArrow='<svg width="24" height="24" ...>...</svg>'
+        previousArrow='<svg width="24" height="24" ...>...</svg>'
+        nextArrow='<svg width="24" height="24" ...>...</svg>'
+      >
+        <ng-template slot="namaCustomer" let-value="data">
+          <div class="font-semibold">{{ value.namaCustomer }}</div>
+        </ng-template>
+  
+        <ng-template slot="amount" let-value="data">
+          <div class="font-semibold">{{ value.amount | currency:'IDR' }}</div>
+        </ng-template>
+  
+        <ng-template slot="tenor" let-value="data">
+          <div class="font-semibold">{{ value.tenor }}</div>
+        </ng-template>
+  
+        <ng-template slot="tanggalPengajuan" let-value="data">
+          <div class="font-semibold">{{ value.tanggalPengajuan | date:'short' }}</div>
+        </ng-template>
+  
+        <ng-template slot="status" let-value="data">
+          <div class="font-semibold">{{ value.status }}</div>
+        </ng-template>
+  
+        <ng-template slot="catatanManager" let-value="data">
+          <div class="font-semibold">{{ value.catatanManager }}</div>
+        </ng-template>
+  
+        <ng-template slot="aksi" let-value="data">
+          <button type="button" class="btn btn-primary btn-sm" (click)="openDisburseModal(value)">Disburse</button>
+        </ng-template>
+      </ng-datatable>
+    </div>
+  </div>
+  
+  <ngx-custom-modal #modalKonfirmasi class="modal-top w-[50%]">
+    <ng-template #modalHeader>
+      <h3 class="text-lg font-semibold mb-4">Konfirmasi Pencairan</h3>
+    </ng-template>
+  
+    <ng-template #modalBody>
+      <div *ngIf="selectedPengajuan">
+        <p>Apakah Anda yakin ingin mencairkan pinjaman berikut?</p>
+        <ul class="mt-4 space-y-2">
+          <li><strong>Nama Customer:</strong> {{ selectedPengajuan.namaCustomer }}</li>
+          <li><strong>Jumlah:</strong> {{ selectedPengajuan.amount | currency:'IDR' }}</li>
+          <li><strong>Tenor:</strong> {{ selectedPengajuan.tenor }} bulan</li>
+          <li><strong>Tanggal Pengajuan:</strong> {{ selectedPengajuan.tanggalPengajuan | date:'short' }}</li>
+          <li><strong>Catatan Manager:</strong> {{ selectedPengajuan.catatanManager }}</li>
+        </ul>
+      </div>
+    </ng-template>
+  
+    <ng-template #modalFooter>
+      <button class="btn btn-success mr-2" (click)="konfirmasiDisburse()">Ya, Cairkan</button>
+      <button class="btn btn-outline-danger" (click)="modalKonfirmasi.close()">Batal</button>
+    </ng-template>
+  </ngx-custom-modal>
+  

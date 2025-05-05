@@ -1,0 +1,42 @@
+<div class="panel mt-6 pb-0">
+    <h5 class="mb-5 text-lg font-semibold dark:text-white-light">List Pengajuan</h5>
+    <div class="datatable">
+      <ng-datatable
+        [rows]="rows"
+        [columns]="cols"
+        [sortable]="true"
+        [loading]="loading"
+        skin="whitespace-nowrap bh-table-hover"
+        firstArrow='<svg width="24" height="24" ...>...</svg>'
+        lastArrow='<svg width="24" height="24" ...>...</svg>'
+        previousArrow='<svg width="24" height="24" ...>...</svg>'
+        nextArrow='<svg width="24" height="24" ...>...</svg>'
+      >
+        <!-- Slot untuk namaCustomer -->
+        <ng-template slot="namaCustomer" let-value="data">
+          <div class="font-semibold">{{ value.namaCustomer }}</div>
+        </ng-template>
+  
+        <!-- Slot untuk amount -->
+        <ng-template slot="amount" let-value="data">
+          <div class="font-semibold">{{ value.amount | currency:'IDR' }}</div>
+        </ng-template>
+  
+        <!-- Slot untuk tanggalPengajuan -->
+        <ng-template slot="tanggalPengajuan" let-value="data">
+          <div class="font-semibold">{{ value.tanggalPengajuan | date:'short' }}</div>
+        </ng-template>
+  
+        <!-- Slot untuk status -->
+        <ng-template slot="status" let-value="data">
+          <div class="font-semibold">{{ value.status }}</div>
+        </ng-template>
+  
+        <!-- Slot untuk namaMarketing -->
+        <ng-template slot="namaMarketing" let-value="data">
+          <div class="font-semibold">{{ value.namaMarketing }}</div>
+        </ng-template>
+  
+      </ng-datatable>
+    </div>
+  </div>  

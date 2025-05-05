@@ -1,0 +1,176 @@
+<div>
+  <div class="panel mt-6 pb-0">
+    <h5 class="mb-5 text-lg font-semibold dark:text-white-light">List Pegawai</h5>
+
+    <button type="button" class="btn btn-primary mb-4" (click)="modalAddEmployee?.open()">Tambah Pegawai</button>
+
+    <div class="datatable">
+      <ng-datatable
+        [rows]="rows"
+        [columns]="cols"
+        [sortable]="true"
+        [loading]="loading"
+        skin="whitespace-nowrap bh-table-hover"
+        firstArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M13 19L7 12L13 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M16.9998 19L10.9998 12L16.9998 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+        lastArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M11 19L17 12L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> <path opacity="0.5" d="M6.99976 19L12.9998 12L6.99976 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+        previousArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M15 5L9 12L15 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+        nextArrow='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-4.5 h-4.5 rtl:rotate-180"> <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/> </svg>'
+      >
+        <ng-template slot="nip" let-value="data">
+          <div class="font-medium">{{ value.nip }}</div>
+        </ng-template>
+
+        <ng-template slot="nama_lengkap" let-value="data">
+          {{ value.nama_lengkap }}
+        </ng-template>
+
+        <ng-template slot="username" let-value="data">
+          <div class="font-semibold">{{ value.username }}</div>
+        </ng-template>
+
+        <ng-template slot="email" let-value="data">
+          <div>{{ value.email }}</div>
+        </ng-template>
+
+        <ng-template slot="namaCabang" let-value="data">
+          <span class="font-semibold">{{ value.namaCabang }}</span>
+        </ng-template>
+
+        <ng-template slot="role" let-value="data">
+          <span class="font-semibold">{{ value.role }}</span>
+        </ng-template>
+
+        <ng-template slot="actions" let-value="data">
+          <button type="button" class="btn btn-sm btn-primary" (click)="openEditModal(value, modalEdit)">
+            Edit
+          </button>
+        </ng-template>
+      </ng-datatable>
+
+      <!-- Modal Edit Employee -->
+      <ngx-custom-modal #modalEdit>
+        <ng-template #modalHeader>
+          <div>Edit Pegawai</div>
+        </ng-template>
+
+        <ng-template #modalBody>
+          <div class="mb-4">
+            <label class="block mb-1">Cabang</label>
+            <select [(ngModel)]="selectedBranchId" class="border p-2 w-full">
+              <option *ngFor="let c of branches" [value]="c.id">{{ c.namaCabang }}</option>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label class="block mb-1">Role</label>
+            <select [(ngModel)]="selectedRole" class="border p-2 w-full">
+              <option *ngFor="let r of roles" [value]="r.nama">{{ r.nama }}</option>
+            </select>
+          </div>
+        </ng-template>
+
+        <ng-template #modalFooter>
+          <button type="button" class="btn btn-outline-danger me-2" (click)="modalEdit.close()">Batal</button>
+          <button type="button" class="btn btn-primary" (click)="saveEmployeeUpdate(modalEdit)">Simpan</button>
+        </ng-template>
+      </ngx-custom-modal>
+
+      <!-- Modal -->
+      <ngx-custom-modal #modalAddEmployee class="modal-top auth-modal">
+        <ng-template #modalHeader>
+          <div class="!py-5">Tambah Pegawai Baru</div>
+        </ng-template>
+
+        <ng-template #modalBody>
+          <form>
+            <!-- Username -->
+            <div class="relative mb-4">
+              <span class="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500">
+                <i class="fa fa-user"></i>
+              </span>
+              <input
+                type="text"
+                [(ngModel)]="newEmployee.username"
+                placeholder="Username"
+                name="employeeUsername"
+                autocomplete="off"
+                class="form-input pl-10"
+              />
+            </div>
+
+            <!-- Password -->
+            <div class="relative mb-4">
+              <span class="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500">
+                <i class="fa fa-lock"></i>
+              </span>
+              <input
+                type="password"
+                [(ngModel)]="newEmployee.password"
+                placeholder="Password"
+                name="employeePassword"
+                autocomplete="new-password"
+                class="form-input pl-10"
+              />
+            </div>
+
+            <!-- Email -->
+            <div class="relative mb-4">
+              <span class="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500">
+                <i class="fa fa-envelope"></i>
+              </span>
+              <input type="email" [(ngModel)]="newEmployee.email" placeholder="Email" name="email"
+                class="form-input pl-10" />
+            </div>
+
+            <!-- Nama Lengkap -->
+            <div class="relative mb-4">
+              <span class="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500">
+                <i class="fa fa-id-card"></i>
+              </span>
+              <input type="text" [(ngModel)]="newEmployee.namaLengkap" placeholder="Nama Lengkap" name="namaLengkap"
+                class="form-input pl-10" />
+            </div>
+
+            <!-- NIP -->
+            <div class="relative mb-4">
+              <span class="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500">
+                <i class="fa fa-hashtag"></i>
+              </span>
+              <input type="text" [(ngModel)]="newEmployee.nip" placeholder="NIP" name="nip"
+                class="form-input pl-10" />
+            </div>
+
+            <!-- Cabang -->
+            <div class="relative mb-4">
+              <span class="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500">
+                <i class="fa fa-building"></i>
+              </span>
+              <select [(ngModel)]="newEmployee.branchId" name="branchId" class="form-input pl-10">
+                <option value="">Pilih Cabang</option>
+                <option *ngFor="let c of branches" [value]="c.id">{{ c.namaCabang }}</option>
+              </select>
+            </div>
+
+            <!-- Role -->
+            <div class="relative mb-4">
+              <span class="absolute top-1/2 -translate-y-1/2 left-3 text-gray-500">
+                <i class="fa fa-user-tag"></i>
+              </span>
+              <select [(ngModel)]="newEmployee.roleId" name="roleId" class="form-input pl-10">
+                <option value="">Pilih Role</option>
+                <option *ngFor="let r of roles" [value]="r.id">{{ r.nama }}</option>
+              </select>
+            </div>
+
+            <button type="button" class="btn btn-primary w-full" (click)="saveNewEmployee(modalAddEmployee)">Simpan</button>
+          </form>
+        </ng-template>
+
+        <ng-template #modalFooter>
+          <button type="button" class="btn btn-outline-danger w-full mt-3" (click)="modalAddEmployee.close()">Batal</button>
+        </ng-template>
+      </ngx-custom-modal>     
+
+    </div>
+  </div>
+</div>
