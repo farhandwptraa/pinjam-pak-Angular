@@ -1,2 +1,77 @@
-<h1>Role Management</h1>
-<p>Ini adalah halaman manajemen role.</p>
+<div>
+    <div class="panel mt-6 pb-0">
+      <h5 class="mb-5 text-lg font-semibold dark:text-white-light">List Role</h5>
+      <div class="datatable">
+        <ng-datatable
+          [rows]="rows"
+          [columns]="cols"
+          [sortable]="true"
+          [loading]="loading"
+          skin="whitespace-nowrap bh-table-hover"
+          firstArrow='<svg width="24" height="24" ...></svg>'
+          lastArrow='<svg width="24" height="24" ...></svg>'
+          previousArrow='<svg width="24" height="24" ...></svg>'
+          nextArrow='<svg width="24" height="24" ...></svg>'
+        >
+          <ng-template slot="roleId" let-value="data">
+            <div class="font-semibold">{{ value.roleId }}</div>
+          </ng-template>
+  
+          <ng-template slot="namaRole" let-value="data">
+            <div class="font-semibold">{{ value.namaRole }}</div>
+          </ng-template>
+  
+          <ng-template slot="aksi" let-value="data">
+            <button class="btn btn-sm btn-primary" (click)="openFeatureModal(value, modalKelolaFitur)">
+              Kelola Fitur
+            </button>
+          </ng-template>                                             
+        </ng-datatable>
+      </div>
+    </div>
+  
+    <!-- Modal Kelola Fitur -->
+    <ngx-custom-modal #modalKelolaFitur>
+        <ng-template #modalHeader>
+        <div class="!py-5">Kelola Fitur untuk: {{ selectedRole?.namaRole }}</div>
+        </ng-template>
+    
+        <ng-template #modalBody>
+        <div *ngIf="features.length === 0">
+            <p>Memuat fitur...</p>
+        </div>
+    
+        <div *ngIf="features.length > 0" class="feature-list">
+            <label
+            *ngFor="let feature of features"
+            class="flex items-center space-x-2 mb-2"
+            >
+            <input
+                type="checkbox"
+                [checked]="selectedFeatureIds.includes(feature.featureId)"
+                (change)="toggleFeature(feature.featureId)"
+            />
+            <span>{{ feature.namaFeature }}</span>
+            </label>
+        </div>
+        </ng-template>
+    
+        <ng-template #modalFooter>
+        <button
+            type="button"
+            class="btn btn-outline-danger me-2"
+            (click)="modalKelolaFitur.close()"
+        >
+            Batal
+        </button>
+        <button
+            type="button"
+            class="btn btn-primary"
+            (click)="saveFeatures()"
+        >
+            Simpan
+        </button>
+        </ng-template>
+    </ngx-custom-modal>
+  
+  </div>  
