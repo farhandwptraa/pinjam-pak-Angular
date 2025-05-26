@@ -16,5 +16,8 @@ export interface PengajuanListResponseDTO {
     tanggalPengajuan: string;
     catatanMarketing: string | null;
     catatanManager: string | null;
+    lokasi: string;
+    amountFinal: string;
+    namaMarketing: string;
   }  
   

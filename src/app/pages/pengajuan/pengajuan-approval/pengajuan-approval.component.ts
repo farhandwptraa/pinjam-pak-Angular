@@ -38,7 +38,6 @@ export class PengajuanApprovalComponent implements OnInit {
     { title: 'Tenor', field: 'tenor' },
     { title: 'Tanggal Pengajuan', field: 'tanggalPengajuan' },
     { title: 'Status', field: 'status' },
-    { title: 'Catatan Marketing', field: 'catatanMarketing' },
     { title: 'Aksi', field: 'aksi' },
   ];
 
@@ -102,10 +101,11 @@ export class PengajuanApprovalComponent implements OnInit {
 
     // Mengganti POST menjadi PUT
     this.pengajuanService.reviewPengajuan(this.selectedPengajuan.idPengajuan, payload).subscribe({
-        next: () => {
-            alert('Review berhasil dikirim.');
-            this.modalReview.close();
-            this.fetchPendingPengajuan(); // refresh data list
+        next: (res) => {
+          console.log('Response:', res.message); // Bisa akses .message
+          alert('Review berhasil dikirim.');
+          this.modalReview.close();
+          this.fetchPendingPengajuan();
         },
         error: (error) => {
             console.error('Gagal kirim review:', error);

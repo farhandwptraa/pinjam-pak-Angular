@@ -102,10 +102,11 @@ export class PengajuanAccComponent implements OnInit {
 
     // Mengganti POST menjadi PUT
     this.pengajuanService.approvePengajuan(this.selectedPengajuan.idPengajuan, payload).subscribe({
-        next: () => {
-            alert('Review berhasil dikirim.');
-            this.modalReview.close();
-            this.fetchPendingPengajuan(); // refresh data list
+        next: (res) => {
+          console.log('Response:', res.message); // Bisa akses .message
+          alert('Review berhasil dikirim.');
+          this.modalReview.close();
+          this.fetchPendingPengajuan();
         },
         error: (error) => {
             console.error('Gagal kirim review:', error);
