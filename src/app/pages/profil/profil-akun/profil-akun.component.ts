@@ -4,21 +4,31 @@ import { SharedModule } from 'src/shared.module';
 import { EmployeeResponseDTO } from 'src/app/models/employee.model';
 import { EmployeeService } from 'src/app/service/employee.service';
 import { Branch } from 'src/app/models/branch.model';
-
+import { AuthService } from 'src/app/service/auth.service';
+import { NgxCustomModalComponent } from 'ngx-custom-modal';
 
 @Component({
   selector: 'app-profil-akun',
   standalone: true,
-  imports: [ SharedModule],
+  imports: [SharedModule, NgxCustomModalComponent],
   templateUrl: './profil-akun.component.html',
   animations: [toggleAnimation],
-  styleUrl: './profil-akun.component.css'
+  styleUrls: ['./profil-akun.component.css']  // Perbaikan typo: styleUrls
 })
 export class ProfilAkunComponent implements OnInit {
   employee: EmployeeResponseDTO | null = null;
   branch: Branch | null = null;
 
-  constructor(private employeeService: EmployeeService) {}
+  oldPassword: string = '';
+  newPassword: string = '';
+  confirmPassword: string = '';
+
+  modalChangePassword: NgxCustomModalComponent | null = null;
+
+  constructor(
+    private employeeService: EmployeeService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     const employeeId = localStorage.getItem('employeeId');
@@ -35,5 +45,39 @@ export class ProfilAkunComponent implements OnInit {
     } else {
       console.error('employeeId tidak ditemukan di localStorage');
     }
+  }
+
+  openChangePasswordModal(modal: NgxCustomModalComponent) {
+    this.oldPassword = '';
+    this.newPassword = '';
+    this.confirmPassword = '';
+    this.modalChangePassword = modal;
+    modal.open();
+  }
+
+  changePassword() {
+    if (!this.oldPassword || !this.newPassword || !this.confirmPassword) {
+      alert('Semua field harus diisi!');
+      return;
+    }
+    if (this.newPassword !== this.confirmPassword) {
+      alert('Password baru dan konfirmasi tidak cocok!');
+      return;
+    }
+
+    this.authService.changePassword(this.oldPassword, this.newPassword).subscribe({
+      next: () => {
+        alert('Password berhasil diubah!');
+        if (this.modalChangePassword) {
+          this.modalChangePassword.close();
+        }
+        this.oldPassword = '';
+        this.newPassword = '';
+        this.confirmPassword = '';
+      },
+      error: (err) => {
+        alert('Gagal mengubah password: ' + (err.error?.message || err.statusText));
+      }
+    });
   }
 }
