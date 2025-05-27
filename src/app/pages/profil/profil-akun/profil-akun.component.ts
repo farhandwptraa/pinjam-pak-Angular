@@ -6,6 +6,7 @@ import { EmployeeService } from 'src/app/service/employee.service';
 import { Branch } from 'src/app/models/branch.model';
 import { AuthService } from 'src/app/service/auth.service';
 import { NgxCustomModalComponent } from 'ngx-custom-modal';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profil-akun',
@@ -27,7 +28,8 @@ export class ProfilAkunComponent implements OnInit {
 
   constructor(
     private employeeService: EmployeeService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router 
   ) {}
 
   ngOnInit(): void {
@@ -77,6 +79,18 @@ export class ProfilAkunComponent implements OnInit {
       },
       error: (err) => {
         alert('Gagal mengubah password: ' + (err.error?.message || err.statusText));
+      }
+    });
+  }
+
+  logout() {
+    this.authService.logout().subscribe({
+      next: () => {
+        localStorage.clear(); // atau hapus token saja: localStorage.removeItem('token');
+        this.router.navigate(['/auth/boxed-signin']); // redirect ke login
+      },
+      error: (err) => {
+        alert('Logout gagal: ' + (err.error?.message || err.statusText));
       }
     });
   }

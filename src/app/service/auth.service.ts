@@ -19,4 +19,8 @@ export class AuthService {
     const payload: ChangePasswordRequest = { oldPassword, newPassword };
     return this.http.put(`${this.baseUrl}/change-password`, payload);
   }
+
+  logout() {
+    return this.http.post('http://localhost:8080/api/auth/logout', {});
+  }
 }

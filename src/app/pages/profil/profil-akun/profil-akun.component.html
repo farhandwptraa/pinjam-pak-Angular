@@ -39,9 +39,20 @@
                 <icon-mail class="h-5 w-5 shrink-0"></icon-mail>
                 <span class="truncate text-primary">{{employee?.email}}</span>
               </a>
-              <button type="button" class="btn btn-primary btn-sm mt-2" (click)="openChangePasswordModal(modalChangePassword)">
-                Change Password
-              </button>
+             <div class="text-center">
+                <button type="button"
+                        class="btn btn-primary btn-sm mt-2 me-2"
+                        style="width: 150px"
+                        (click)="openChangePasswordModal(modalChangePassword)">
+                    Change Password
+                </button>
+                <button type="button"
+                        class="btn btn-danger btn-sm mt-2"
+                        style="width: 150px"
+                        (click)="logout()">
+                    Logout
+                </button>
+              </div>
             </li>
           </ul>
         </div>
