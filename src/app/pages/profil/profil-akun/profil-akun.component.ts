@@ -87,7 +87,7 @@ export class ProfilAkunComponent implements OnInit {
     this.authService.logout().subscribe({
       next: () => {
         localStorage.clear(); // atau hapus token saja: localStorage.removeItem('token');
-        this.router.navigate(['/auth/boxed-signin']); // redirect ke login
+        this.router.navigate(['/auth/login']); // redirect ke login
       },
       error: (err) => {
         alert('Logout gagal: ' + (err.error?.message || err.statusText));
