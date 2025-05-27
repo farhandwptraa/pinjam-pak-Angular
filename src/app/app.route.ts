@@ -88,6 +88,13 @@ export const routes: Routes = [
                 loadChildren: () => import('./pages/pengajuan/pengajuan-routing.module').then((m) => m.PengajuanRoutingModule),
                 data: { title: 'Pengajuan Dashboard' }
             },
+
+            // profil
+            {
+                path: 'profil',
+                loadChildren: () => import('./pages/profil/profil-routing.module').then((m) => m.ProfilRoutingModule),
+                data: { title: 'Profil Dashboard' }
+            },
         ],
     },
 

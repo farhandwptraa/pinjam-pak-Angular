@@ -1,7 +1,5 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { PengajuanListComponent } from './pengajuan-list/pengajuan-list.component';
-
 
 const routes: Routes = [
     {

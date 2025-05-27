@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpBackend, HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from 'src/app/interceptor/auth.interceptor';
 
 //Routes
 import { routes } from './app.route';
@@ -99,7 +101,13 @@ import { ThemeCustomizerComponent } from './layouts/theme-customizer';
         FaqComponent,
     ],
 
-    providers: [Title],
+    providers: [
+        {
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptor,
+        multi: true
+        }
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

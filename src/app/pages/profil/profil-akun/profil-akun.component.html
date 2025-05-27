@@ -1,0 +1,65 @@
+<div>
+    <ul class="flex space-x-2 rtl:space-x-reverse">
+        <li>
+            <a href="javascript:;" class="text-primary hover:underline">Users</a>
+        </li>
+        <li class="before:content-['/'] ltr:before:mr-2 rtl:before:ml-2">
+            <span>Profile</span>
+        </li>
+    </ul>
+    <div class="pt-5">
+        <div class="mb-5 grid grid-cols-1 gap-5 lg:grid-cols-3 xl:grid-cols-4">
+            <div class="panel">
+                <div class="mb-5 flex items-center justify-between">
+                    <h5 class="text-lg font-semibold dark:text-white-light">Profile</h5>
+                </div>
+                <div class="mb-5">
+                    <div class="flex flex-col items-center justify-center">
+                        <img src="/assets/images/ChatGPT Image 27 Mei 2025, 15.14.35.png" alt="" class="mb-5 h-24 w-24 rounded-full object-cover" />
+                        <p class="text-xl font-semibold text-primary">{{employee?.nama_lengkap}}</p>
+                    </div>
+                    <ul class="m-auto mt-5 flex max-w-[160px] flex-col space-y-4 font-semibold text-white-dark">
+                        <li class="flex items-center gap-2">
+                            <icon-coffee class="shrink-0" />
+                            {{employee?.role}}
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <icon-calendar class="shrink-0" />
+                            {{employee?.nip}}
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <icon-map-pin class="shrink-0" />
+                            {{employee?.namaCabang}}
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="flex items-center gap-2">
+                                <icon-mail class="h-5 w-5 shrink-0" />
+                                <span class="truncate text-primary">{{employee?.email}}</span></a
+                            >
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="panel lg:col-span-2 xl:col-span-3">
+                <div class="mb-5">
+                    <h5 class="text-lg font-semibold dark:text-white-light">Informasi Cabang</h5>
+                </div>
+
+                <div class="bg-white dark:bg-[#1e293b] rounded-2xl shadow-md p-6">
+                    <h6 class="text-xl font-bold text-primary mb-2">{{ branch?.namaCabang }}</h6>
+
+                    <div class="text-gray-700 dark:text-white-light space-y-1">
+                    <p>
+                        <span class="font-semibold">Alamat:</span>
+                        {{ branch?.alamat }}
+                    </p>
+                    <p>
+                        <span class="font-semibold">Area:</span>
+                        {{ branch?.area }}
+                    </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

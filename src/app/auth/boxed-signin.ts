@@ -41,6 +41,7 @@ export class BoxedSigninComponent {
         localStorage.setItem('role_id', res.role_id); // Simpan role_id
         localStorage.setItem('username', res.username); // Simpan username
         localStorage.setItem('role', res.role); // Simpan role (misalnya "ADMIN", "USER", dll)
+        localStorage.setItem('employeeId', res.employeeId);
   
         this.router.navigate(['/analytics']); // atau dashboard
       },

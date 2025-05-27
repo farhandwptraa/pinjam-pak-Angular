@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EmployeeResponseDTO, RegisterEmployeeRequestDTO } from '../models/employee.model';
+import { Branch } from '../models/branch.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +31,9 @@ export class EmployeeService {
 
   deleteEmployee(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  getMyBranch(): Observable<Branch> {
+    return this.http.get<Branch>(`${this.apiUrl}/my-branch`);
   }
 }
