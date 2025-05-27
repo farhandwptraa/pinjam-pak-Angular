@@ -1,14 +1,14 @@
 export interface Role {
-    roleId: number;
-    namaRole: string;
-  }
+  roleId: string;
+  namaRole: string;
+}
+
+export interface Feature {
+  featureId: string;
+  namaFeature: string;
+}
   
-  export interface Feature {
-    featureId: number;
-    namaFeature: string;
-  }
-  
-  export interface RoleFeatureDTO {
-    roleId: number;
-    featureIds: number[];
-  }  
+export interface RoleFeatureDTO {
+  roleId: string;
+  featureIds: string[];
+}

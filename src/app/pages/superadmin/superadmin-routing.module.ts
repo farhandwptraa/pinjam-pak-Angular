@@ -1,6 +1,5 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { EmployeeManagementComponent } from './employee-management/employee-management.component';
 import { RoleManagementComponent } from './role-management/role-management.component';
@@ -8,11 +7,6 @@ import { MenuManagementComponent } from './menu-management/menu-management.compo
 import { AccessRoleManagementComponent } from './access-role-management/access-role-management.component';
 
 const routes: Routes = [
-    {
-      path: '',
-      loadComponent: () =>
-        import('./dashboard/dashboard.component').then(m => m.DashboardComponent),
-    },
     {
       path: 'users',
       loadComponent: () =>

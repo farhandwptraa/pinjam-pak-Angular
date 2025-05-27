@@ -16,35 +16,37 @@ export class RoleFeatureService {
     });
   }
 
-  // ✅ Ambil semua role
+  // Ambil semua role
   getAllRoles(): Observable<Role[]> {
     return this.http.get<Role[]>('http://localhost:8080/api/employee/roles', {
       headers: this.getAuthHeaders()
     });
   }
 
-  // ✅ Ambil semua fitur
+  // Ambil semua fitur
   getAllFeatures(): Observable<Feature[]> {
     return this.http.get<Feature[]>(`${this.apiUrl}/features`, {
       headers: this.getAuthHeaders()
     });
   }
 
-  // ✅ Ambil fitur berdasarkan roleId
-  getFeaturesByRole(roleId: number): Observable<Feature[]> {
+  // Ambil fitur berdasarkan roleId (parameter jadi string)
+  getFeaturesByRole(roleId: string): Observable<Feature[]> {
     return this.http.get<Feature[]>(`${this.apiUrl}/${roleId}`, {
       headers: this.getAuthHeaders()
     });
   }
 
-  // ✅ Assign/replace fitur ke role
-  assignFeaturesToRole(dto: RoleFeatureDTO): Observable<any> {
-    return this.http.post(`${this.apiUrl}/assign`, dto, {
-      headers: this.getAuthHeaders()
-    });
+  // Assign fitur ke role (sudah benar pakai string[])
+  assignFeaturesToRole(roleId: string, featureIds: string[]): Observable<void> {
+    return this.http.post<void>(
+      `${this.apiUrl}/${roleId}`,
+      featureIds,
+      { headers: this.getAuthHeaders() }
+    );
   }
 
-  // (Opsional) Update granular fitur satu per satu
+  // Update granular fitur satu per satu (optional)
   updateMappings(payload: { roleId: string; featureId: string; enabled: boolean }[]): Observable<any> {
     return this.http.post(`${this.apiUrl}/update`, payload, {
       headers: this.getAuthHeaders()

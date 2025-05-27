@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DataTableModule } from '@bhplugin/ng-datatable';
 import { RoleFeatureService } from 'src/app/service/role-feature.service';
-import { Role, Feature, RoleFeatureDTO } from 'src/app/models/role-feature.model';
+import { Role, Feature } from 'src/app/models/role-feature.model';
 import { NgxCustomModalComponent } from 'ngx-custom-modal';
-
 
 @Component({
   selector: 'app-role-management',
@@ -19,15 +18,16 @@ export class RoleManagementComponent implements OnInit {
 
   roles: Role[] = [];
   features: Feature[] = [];
-  selectedFeatureIds: number[] = [];
+  selectedFeatureIds: string[] = [];
 
   selectedRole: Role | null = null;
   showModal = false;
   loading = false;
 
+  currentModal: NgxCustomModalComponent | null = null;  // Simpan modal aktif
+
   rows: Role[] = [];
   cols = [
-    { title: 'Role ID', field: 'roleId' },
     { title: 'Nama Role', field: 'namaRole' },
     { title: 'Aksi', field: 'aksi' }
   ];
@@ -57,20 +57,20 @@ export class RoleManagementComponent implements OnInit {
       alert('Role tidak valid. Tidak dapat membuka modal.');
       return;
     }
-  
+
     this.selectedRole = role;
     this.selectedFeatureIds = [];
     this.features = [];
-  
+    this.currentModal = modal;  // Simpan modal aktif
+
     this.roleService.getAllFeatures().subscribe({
       next: (features) => {
         this.features = features;
-  
+
         this.roleService.getFeaturesByRole(role.roleId).subscribe({
           next: (assignedFeatures) => {
             this.selectedFeatureIds = assignedFeatures.map(f => f.featureId);
-  
-            // ✅ Modal dibuka secara eksplisit
+
             modal.open();
             console.log('Modal dibuka untuk:', this.selectedRole?.namaRole);
           },
@@ -85,9 +85,9 @@ export class RoleManagementComponent implements OnInit {
         alert('Gagal mengambil daftar fitur.');
       }
     });
-  }  
+  }
 
-  toggleFeature(featureId: number): void {
+  toggleFeature(featureId: string): void {
     const index = this.selectedFeatureIds.indexOf(featureId);
     if (index > -1) {
       this.selectedFeatureIds.splice(index, 1);
@@ -99,26 +99,24 @@ export class RoleManagementComponent implements OnInit {
   saveFeatures(): void {
     if (!this.selectedRole) return;
 
-    const dto: RoleFeatureDTO = {
-      roleId: this.selectedRole.roleId,
-      featureIds: this.selectedFeatureIds
-    };
-
-    this.roleService.assignFeaturesToRole(dto).subscribe({
-      next: () => {
-        alert('Fitur berhasil disimpan!');
-        this.closeModal();
-      },
-      error: (err) => {
-        console.error('Gagal menyimpan fitur:', err);
-        alert('Gagal menyimpan fitur.');
-      }
-    });
+    this.roleService.assignFeaturesToRole(this.selectedRole.roleId, this.selectedFeatureIds)
+      .subscribe({
+        next: () => {
+          alert('Fitur berhasil disimpan!');
+          this.currentModal?.close();  // Tutup modal
+          this.closeModal();
+        },
+        error: (err) => {
+          console.error('Gagal menyimpan fitur:', err);
+          alert('Gagal menyimpan fitur.');
+        }
+      });
   }
 
   closeModal(): void {
     this.showModal = false;
     this.selectedRole = null;
     this.selectedFeatureIds = [];
+    this.currentModal = null;  // Reset modal aktif
   }
 }
