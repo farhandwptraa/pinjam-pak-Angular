@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { EmployeeManagementComponent } from './employee-management/employee-management.component';
 import { RoleManagementComponent } from './role-management/role-management.component';
-import { MenuManagementComponent } from './menu-management/menu-management.component';
-import { AccessRoleManagementComponent } from './access-role-management/access-role-management.component';
 
 const routes: Routes = [
     {
@@ -29,17 +27,10 @@ const routes: Routes = [
         ),
     },
     {
-      path: 'menus',
+      path: 'branch',
       loadComponent: () =>
-        import('./menu-management/menu-management.component').then(
-          m => m.MenuManagementComponent
-        ),
-    },
-    {
-      path: 'access-roles',
-      loadComponent: () =>
-        import('./access-role-management/access-role-management.component').then(
-          m => m.AccessRoleManagementComponent
+        import('./branch-management/branch-management.component').then(
+          m => m.BranchManagementComponent
         ),
     },
   ];  

@@ -36,4 +36,8 @@ export class EmployeeService {
   getMyBranch(): Observable<Branch> {
     return this.http.get<Branch>(`${this.apiUrl}/my-branch`);
   }
+
+  getBranches(): Observable<Branch[]> {
+    return this.http.get<Branch[]>(`${this.apiUrl}/branches`);
+  }
 }

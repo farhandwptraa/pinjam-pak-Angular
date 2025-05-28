@@ -1,6 +1,10 @@
 export interface Branch {
-    id: string;
-    namaCabang: string;
-    alamat: string;
-    area: string;
-  }  
+  branchId: string;
+  namaCabang: string;
+  alamat: string;
+}  
+
+export interface Province {
+  name: string;
+  id: string;
+}
