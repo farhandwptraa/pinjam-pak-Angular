@@ -107,6 +107,9 @@ export const routes: Routes = [
 
             // auth
             { path: '', loadChildren: () => import('src/app/auth/auth-routing.module').then((d) => d.AuthRoutingModule) },
+
+            // landing
+            { path: '', loadChildren: () => import('src/app/landing/landing-routing.module').then((d) => d.LandingRoutingModule) },
         ],
     },
 ];
