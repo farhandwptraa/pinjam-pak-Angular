@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private renderer: Renderer2) {}
 
   ngOnInit(): void {
-    // load semua CSS synchronously
+    // Load CSS
     [
       'assets/landing/vendor/bootstrap/css/bootstrap.min.css',
       'assets/landing/vendor/bootstrap-icons/bootstrap-icons.css',
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async ngAfterViewInit(): Promise<void> {
-    // load semua JS dan tunggu sampai selesai
+    // Load JS
     await Promise.all([
       this.loadScript('assets/landing/vendor/bootstrap/js/bootstrap.bundle.min.js'),
       this.loadScript('assets/landing/vendor/php-email-form/validate.js'),
@@ -36,20 +36,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.loadScript('assets/landing/vendor/glightbox/js/glightbox.min.js'),
     ]);
 
-    // setelah semua script ter-load, inisialisasi perilaku halaman
+    // Inisialisasi seluruh perilaku halaman
     this.initPageBehavior();
   }
 
   ngOnDestroy(): void {
     if (this.scrollListener) this.scrollListener();
-    this.faqListeners.forEach(cleanup => cleanup());
-    this.navmenuLinkListeners.forEach(cleanup => cleanup());
-    this.dropdownListeners.forEach(cleanup => cleanup());
+    this.faqListeners.forEach(fn => fn());
+    this.navmenuLinkListeners.forEach(fn => fn());
+    this.dropdownListeners.forEach(fn => fn());
   }
 
-  /**  
-   * loadScript mengembalikan Promise yang resolve saat script onload  
-   */
   private loadScript(src: string): Promise<void> {
     return new Promise(resolve => {
       const script = this.renderer.createElement('script');
@@ -79,6 +76,29 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  private galleryConfig = { 
+    loop: true,
+    speed: 600,
+    autoplay: { delay: 5000 },
+    slidesPerView: 'auto',
+    centeredSlides: true,
+    pagination: { el: null as HTMLElement | null, clickable: true },
+    breakpoints: {
+      320:{ slidesPerView:1, spaceBetween:0 },
+      768:{ slidesPerView:3, spaceBetween:30 },
+      992:{ slidesPerView:5, spaceBetween:30 },
+      1200:{ slidesPerView:7, spaceBetween:30 }
+    }
+  };
+
+  private testimonialConfig = {
+    loop: true,
+    speed: 600,
+    autoplay: { delay: 5000 },
+    slidesPerView: 'auto',
+    pagination: { el: null as HTMLElement | null, clickable: true }
+  };
+
   private initPageBehavior() {
     const body = document.body;
     const header = document.querySelector('#header');
@@ -89,51 +109,63 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const faqItems = Array.from(document.querySelectorAll('.faq-item h3, .faq-item .faq-toggle')) as HTMLElement[];
     const dropdownToggles = Array.from(document.querySelectorAll('.navmenu .toggle-dropdown')) as HTMLElement[];
 
-    // fungsi scroll / sticky
-    const toggleScrolled = () => {
-      if (!header) return;
-      if (window.scrollY > 100) body.classList.add('scrolled');
-      else body.classList.remove('scrolled');
-    };
-    const toggleScrollTop = () => {
-      if (!scrollTopBtn) return;
-      if (window.scrollY > 100) scrollTopBtn.classList.add('active');
-      else scrollTopBtn.classList.remove('active');
-    };
-
-    // cleanup preloader
-    if (preloader && preloader.parentNode) {
+    // Hapus preloader
+    if (preloader?.parentNode) {
       preloader.parentNode.removeChild(preloader);
     }
 
-    // panggil sekali awal
+    // Sticky header & scroll-top
+    const toggleScrolled = () => {
+      if (!header) return;
+      window.scrollY > 100 ? body.classList.add('scrolled') : body.classList.remove('scrolled');
+    };
+    const toggleScrollTop = () => {
+      if (!scrollTopBtn) return;
+      window.scrollY > 100 ? scrollTopBtn.classList.add('active') : scrollTopBtn.classList.remove('active');
+    };
     toggleScrolled();
     toggleScrollTop();
 
-    // inisialisasi AOS dan Swiper
+    // Inisialisasi AOS
     if ((window as any).AOS) {
       (window as any).AOS.init({ duration: 600, easing: 'ease-in-out', once: true, mirror: false });
     }
-    if ((window as any).Swiper) {
-      document.querySelectorAll('.init-swiper').forEach(el => {
-        const cfgEl = el.querySelector('.swiper-config');
-        if (!cfgEl) return;
-        try {
-          const config = JSON.parse(cfgEl.textContent!.trim());
-          // @ts-ignore
-          new (window as any).Swiper(el, config);
-        } catch { /* invalid JSON? skip */ }
+
+    // **Inisialisasi GLightbox supaya gallery lightbox berjalan**
+    if ((window as any).GLightbox) {
+      (window as any).GLightbox({
+        selector: '.glightbox'
       });
     }
 
-    // scrollspy listener
+    // Inisialisasi Swiper dengan konfigurasi untuk gallery dan testimonial
+    if ((window as any).Swiper) {
+      // Gallery swiper
+      const galleryEl = document.querySelector('.gallery .init-swiper') as HTMLElement | null;
+      if (galleryEl) {
+        const pg = galleryEl.querySelector('.swiper-pagination') as HTMLElement;
+        this.galleryConfig.pagination.el = pg;
+        // @ts-ignore
+        new (window as any).Swiper(galleryEl, this.galleryConfig).update();
+      }
+      // Testimonials swiper
+      const testiEl = document.querySelector('#testimonials .init-swiper') as HTMLElement | null;
+      if (testiEl) {
+        const pg = testiEl.querySelector('.swiper-pagination') as HTMLElement;
+        this.testimonialConfig.pagination.el = pg;
+        // @ts-ignore
+        new (window as any).Swiper(testiEl, this.testimonialConfig).update();
+      }
+    }
+
+    // Scrollspy listener
     this.scrollListener = this.renderer.listen('window', 'scroll', () => {
       toggleScrolled();
       toggleScrollTop();
       navmenuScrollspy();
     });
 
-    // mobile nav toggle
+    // Mobile nav toggle button
     if (mobileNavToggleBtn) {
       this.navmenuLinkListeners.push(
         this.renderer.listen(mobileNavToggleBtn, 'click', () => {
@@ -144,7 +176,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       );
     }
 
-    // auto‑close mobile nav on link click
+    // Auto-close mobile nav saat klik link
     navmenuLinks.forEach(link => {
       this.navmenuLinkListeners.push(
         this.renderer.listen(link, 'click', () => {
@@ -157,7 +189,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       );
     });
 
-    // dropdown toggle
+    // Dropdown toggle di navmenu
     dropdownToggles.forEach(toggle => {
       this.dropdownListeners.push(
         this.renderer.listen(toggle, 'click', e => {
@@ -180,7 +212,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       );
     });
 
-    // scroll-top button click
+    // Scroll-top button click behavior
     if (scrollTopBtn) {
       this.navmenuLinkListeners.push(
         this.renderer.listen(scrollTopBtn, 'click', e => {
@@ -190,6 +222,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       );
     }
 
+    // Scrollspy helper untuk highlight menu saat scroll
     function navmenuScrollspy() {
       navmenuLinks.forEach(a => {
         if (!a.hash) return;
