@@ -80,14 +80,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     loop: true,
     speed: 600,
     autoplay: { delay: 5000 },
-    slidesPerView: 'auto',
+    slidesPerView: 1,  // default
     centeredSlides: true,
     pagination: { el: null as HTMLElement | null, clickable: true },
     breakpoints: {
-      320:{ slidesPerView:1, spaceBetween:0 },
-      768:{ slidesPerView:3, spaceBetween:30 },
-      992:{ slidesPerView:5, spaceBetween:30 },
-      1200:{ slidesPerView:7, spaceBetween:30 }
+      320:  { slidesPerView: 1, spaceBetween: 0 },
+      768:  { slidesPerView: 3, spaceBetween: 30 },
+      992:  { slidesPerView: 5, spaceBetween: 30 },
+      1200: { slidesPerView: 5, spaceBetween: 30 } // turunkan dari 7 jadi 5
     }
   };
 

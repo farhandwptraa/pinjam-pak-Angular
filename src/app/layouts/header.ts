@@ -4,8 +4,6 @@ import { Store } from '@ngrx/store';
 import { Router, NavigationEnd } from '@angular/router';
 import { EmployeeResponseDTO } from 'src/app/models/employee.model';
 import { EmployeeService } from 'src/app/service/employee.service';
-import { AppService } from '../service/app.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/service/auth.service';
 
