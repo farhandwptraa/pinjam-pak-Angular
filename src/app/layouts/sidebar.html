@@ -16,50 +16,33 @@
             </div>
             <ng-scrollbar class="relative !h-[calc(100vh-80px)]" appearance="compact">
                 <ul class="relative space-y-0.5 p-4 py-0 font-semibold">
-                    <li class="accordion menu nav-item">
-                        <button
-                            type="button"
-                            class="nav-link group w-full"
-                            [ngClass]="{ active: activeDropdown.includes('dashboard') }"
-                            (click)="toggleAccordion('dashboard')"
-                        >
-                            <div class="flex items-center">
-                                <icon-menu-dashboard class="shrink-0 group-hover:!text-primary" />
+                    <h2 class="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
+                        <icon-minus class="hidden h-5 w-4 flex-none" />
+                        <span>Dashboard</span>
+                    </h2>
 
-                                <span class="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3">
-                                    {{ 'dashboard' | translate }}
-                                </span>
-                            </div>
-                            <div [ngClass]="{ 'rtl:rotate-90 -rotate-90': !activeDropdown.includes('dashboard') }">
-                                <icon-caret-down />
-                            </div>
-                        </button>
-                        <div [@slideDownUp]="!activeDropdown.includes('dashboard')" class="accordion-content">
-                            <ul class="sub-menu text-gray-500">
-                                <li>
-                                    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="toggleMobileMenu()"
-                                        >{{ 'sales' | translate }}</a
-                                    >
-                                </li>
-                                <li>
-                                    <a routerLink="/analytics" routerLinkActive="active" (click)="toggleMobileMenu()">{{ 'analytics' | translate }}</a>
-                                </li>
-                                <li>
-                                    <a routerLink="/finance" routerLinkActive="active" (click)="toggleMobileMenu()">{{ 'finance' | translate }}</a>
-                                </li>
-                                <li>
-                                    <a routerLink="/crypto" routerLinkActive="active" (click)="toggleMobileMenu()">{{ 'crypto' | translate }}</a>
-                                </li>
-                            </ul>
-                        </div>
+                    <li class="nav-item">
+                        <ul>
+                            <li class="nav-item">
+                                <a routerLink="/dashboard/main" class="group" routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <div class="flex items-center">
+                                        <icon-menu-chat class="shrink-0 group-hover:!text-primary" />
+
+                                        <span class="text-black dark:text-[#506690] dark:group-hover:text-white-dark ltr:pl-3 rtl:pr-3"
+                                            >Main</span
+                                        >
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
-                    <h2 class="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
+                    <h2 class="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]" *ngIf="currentUserRole === 'SUPERADMIN'">
                         <icon-minus class="hidden h-5 w-4 flex-none" />
                         <span>Manajemen</span>
                     </h2>
 
-                    <li class="nav-item">
+                    <li class="nav-item" *ngIf="currentUserRole === 'SUPERADMIN'">
                         <ul>
                             <li class="nav-item">
                                 <a routerLink="/superadmin/users" class="group" routerLinkActive="active" (click)="toggleMobileMenu()">
@@ -108,12 +91,12 @@
                         </ul>
                     </li>
 
-                    <h2 class="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
+                    <h2 class="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]" *ngIf="currentUserRole !== 'SUPERADMIN'">
                         <icon-minus class="hidden h-5 w-4 flex-none" />
                         <span>Pengajuan</span>
                     </h2>
 
-                    <li class="nav-item">
+                    <li class="nav-item" *ngIf="currentUserRole !== 'SUPERADMIN'">
                         <ul>
                             <li class="nav-item">
                                 <a routerLink="/pengajuan/list" class="group" routerLinkActive="active" (click)="toggleMobileMenu()">
@@ -126,7 +109,7 @@
                                     </div>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" *ngIf="currentUserRole === 'MARKETING'">
                                 <a routerLink="/pengajuan/approval" class="group" routerLinkActive="active" (click)="toggleMobileMenu()">
                                     <div class="flex items-center">
                                         <icon-menu-mailbox class="shrink-0 group-hover:!text-primary" />
@@ -137,7 +120,7 @@
                                     </div>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" *ngIf="currentUserRole === 'MANAGER'">
                                 <a routerLink="/pengajuan/acc" class="group" routerLinkActive="active" (click)="toggleMobileMenu()">
                                     <div class="flex items-center">
                                         <icon-menu-todo class="shrink-0 group-hover:!text-primary" />
@@ -148,7 +131,7 @@
                                     </div>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item" *ngIf="currentUserRole === 'BACKOFFICE'">
                                 <a routerLink="/pengajuan/disburse" class="group" routerLinkActive="active" (click)="toggleMobileMenu()">
                                     <div class="flex items-center">
                                         <icon-menu-notes class="shrink-0 group-hover:!text-primary" />

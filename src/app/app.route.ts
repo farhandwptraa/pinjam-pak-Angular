@@ -35,8 +35,9 @@ export const routes: Routes = [
         component: AppLayout,
         children: [
             // ✅ Redirect dari root ke /home
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            
             // dashboard
+            { path: '', component: IndexComponent, data: { title: 'Sales Admin' } },
             { path: 'analytics', component: AnalyticsComponent, data: { title: 'Analytics Admin' } },
             { path: 'finance', component: FinanceComponent, data: { title: 'Finance Admin' } },
             { path: 'crypto', component: CryptoComponent, data: { title: 'Crypto Admin' } },
@@ -95,6 +96,13 @@ export const routes: Routes = [
                 path: 'profil',
                 loadChildren: () => import('./pages/profil/profil-routing.module').then((m) => m.ProfilRoutingModule),
                 data: { title: 'Profil Dashboard' }
+            },
+
+            // dashboard
+            {
+                path: 'dashboard',
+                loadChildren: () => import('./pages/dashboard/dashboard-routing.module').then((m) => m.DashboardRoutingModule),
+                data: { title: 'Dashboard' }
             },
         ],
     },

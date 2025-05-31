@@ -1,0 +1,53 @@
+<!-- ========================= -->
+<!-- 1. Ringkasan Kartu -->
+<!-- ========================= -->
+<div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+  <div *ngFor="let card of summaryCards" class="bg-white p-4 rounded-xl shadow-md">
+    <div class="flex items-center space-x-4">
+      <i [class]="card.icon + ' text-3xl text-blue-600'"></i>
+      <div>
+        <div class="text-xl font-semibold">{{ card.value }}</div>
+        <div class="text-sm text-gray-700">{{ card.title }}</div>
+        <div class="text-xs text-gray-400">{{ card.description }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================= -->
+<!-- 2. Bar Chart -->
+<!-- ========================= -->
+<div class="p-4 grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+  <div class="bg-white p-4 rounded-xl shadow-md">
+    <div *ngIf="barChart">
+        <apx-chart
+            [series]="barChart.series"
+            [chart]="barChart.chart"
+            [xaxis]="barChart.xaxis"
+            [colors]="barChart.colors"
+            [plotOptions]="barChart.plotOptions"
+            [dataLabels]="barChart.dataLabels"
+            [stroke]="barChart.stroke"
+            [fill]="barChart.fill"
+            [grid]="barChart.grid"
+            [yaxis]="barChart.yaxis"
+        ></apx-chart>
+    </div>
+  </div>
+
+  <!-- ========================= -->
+  <!-- 3. Donut Chart -->
+  <!-- ========================= -->
+  <div class="bg-white p-4 rounded-xl shadow-md">
+    <div *ngIf="donutChart">
+        <apx-chart
+            [series]="donutChart.series"
+            [chart]="donutChart.chart"
+            [labels]="donutChart.labels"
+            [colors]="donutChart.colors"
+            [responsive]="donutChart.responsive"
+            [legend]="donutChart.legend"
+        ></apx-chart>
+    </div>
+  </div>
+</div>

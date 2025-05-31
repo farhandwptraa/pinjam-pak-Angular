@@ -47,7 +47,7 @@ export class LoginComponent {
         localStorage.setItem('role',     res.role);
         localStorage.setItem('employeeId', res.employeeId);
 
-        this.router.navigate(['/analytics']);
+        this.router.navigate(['/dashboard/main']);
       },
       error: (err) => {
         alert('Login gagal: ' + (err.error?.message || 'Periksa kembali data login'));

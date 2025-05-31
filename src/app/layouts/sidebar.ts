@@ -14,6 +14,10 @@ export class SidebarComponent {
     store: any;
     activeDropdown: string[] = [];
     parentDropdown: string = '';
+
+    role: string = ''; 
+    currentUserRole: string = '';
+    
     constructor(
         public translate: TranslateService,
         public storeData: Store<any>,
@@ -21,6 +25,7 @@ export class SidebarComponent {
     ) {
         this.initStore();
     }
+
     async initStore() {
         this.storeData
             .select((d) => d.index)
@@ -30,6 +35,7 @@ export class SidebarComponent {
     }
 
     ngOnInit() {
+        this.initRole();
         this.setActiveDropdown();
     }
 
@@ -39,7 +45,7 @@ export class SidebarComponent {
             selector.classList.add('active');
             const ul: any = selector.closest('ul.sub-menu');
             if (ul) {
-                let ele: any = ul.closest('li.menu').querySelectorAll('.nav-link') || [];
+                let ele: any = ul.closest('li.menu')?.querySelectorAll('.nav-link') || [];
                 if (ele.length) {
                     ele = ele[0];
                     setTimeout(() => {
@@ -62,5 +68,11 @@ export class SidebarComponent {
         } else {
             this.activeDropdown.push(name);
         }
+    }
+
+    initRole() {
+        const role = localStorage.getItem('role');
+        this.currentUserRole = role ?? '';
+        console.log('Current User Role:', this.currentUserRole); // 👈 Debug log
     }
 }
