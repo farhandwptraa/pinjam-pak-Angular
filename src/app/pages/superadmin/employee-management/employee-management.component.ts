@@ -69,7 +69,7 @@ export class EmployeeManagementComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.branches = data.map(b => ({
-            id: b.branch_id,
+            id: b.branchId,
             namaCabang: b.namaCabang
           }));
         },
@@ -84,7 +84,7 @@ export class EmployeeManagementComponent implements OnInit {
       .subscribe({
         next: (data) => {
           this.roles = data.map(r => ({
-            id: r.role_id,
+            id: r.roleId,
             nama: r.namaRole
           }));
         },
