@@ -32,7 +32,7 @@ export class AppComponent {
                 }),
                 tap((data: any) => {
                     let title = data.title;
-                    title = (title ? title + ' | ' : '') + 'VRISTO - Multipurpose Tailwind Dashboard Template';
+                    title = (title ? title + ' | ' : '') + 'Pinjam Pak Dashboard';
                     this.titleService.setTitle(title);
                 }),
             )

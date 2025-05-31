@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   imports: [SharedModule, NgxCustomModalComponent],
   templateUrl: './profil-akun.component.html',
   animations: [toggleAnimation],
-  styleUrls: ['./profil-akun.component.css']  // Perbaikan typo: styleUrls
+  styleUrls: ['./profil-akun.component.css'] 
 })
 export class ProfilAkunComponent implements OnInit {
   employee: EmployeeResponseDTO | null = null;

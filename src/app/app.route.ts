@@ -34,8 +34,9 @@ export const routes: Routes = [
         path: '',
         component: AppLayout,
         children: [
+            // ✅ Redirect dari root ke /home
+            { path: '', redirectTo: 'home', pathMatch: 'full' },
             // dashboard
-            { path: '', component: IndexComponent, data: { title: 'Sales Admin' } },
             { path: 'analytics', component: AnalyticsComponent, data: { title: 'Analytics Admin' } },
             { path: 'finance', component: FinanceComponent, data: { title: 'Finance Admin' } },
             { path: 'crypto', component: CryptoComponent, data: { title: 'Crypto Admin' } },
