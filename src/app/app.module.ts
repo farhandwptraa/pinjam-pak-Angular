@@ -60,7 +60,6 @@ import { AuthLayout } from './layouts/auth-layout';
 import { HeaderComponent } from './layouts/header';
 import { FooterComponent } from './layouts/footer';
 import { SidebarComponent } from './layouts/sidebar';
-import { ThemeCustomizerComponent } from './layouts/theme-customizer';
 
 @NgModule({
     imports: [
@@ -85,7 +84,6 @@ import { ThemeCustomizerComponent } from './layouts/theme-customizer';
         HeaderComponent,
         FooterComponent,
         SidebarComponent,
-        ThemeCustomizerComponent,
         TablesComponent,
         FontIconsComponent,
         ChartsComponent,

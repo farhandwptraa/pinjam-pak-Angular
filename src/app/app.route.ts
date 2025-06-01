@@ -28,8 +28,15 @@ import { AuthLayout } from './layouts/auth-layout';
 // pages
 import { KnowledgeBaseComponent } from './pages/knowledge-base';
 import { FaqComponent } from './pages/faq';
+import { HomeComponent } from './landing/home/home.component';
 
 export const routes: Routes = [
+    {
+        path: '',
+        redirectTo: '/home',
+        pathMatch: 'full',
+    },
+    
     {
         path: '',
         component: AppLayout,
@@ -37,7 +44,6 @@ export const routes: Routes = [
             // ✅ Redirect dari root ke /home
             
             // dashboard
-            { path: '', component: IndexComponent, data: { title: 'Sales Admin' } },
             { path: 'analytics', component: AnalyticsComponent, data: { title: 'Analytics Admin' } },
             { path: 'finance', component: FinanceComponent, data: { title: 'Finance Admin' } },
             { path: 'crypto', component: CryptoComponent, data: { title: 'Crypto Admin' } },
