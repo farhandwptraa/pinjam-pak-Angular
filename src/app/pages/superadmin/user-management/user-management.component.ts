@@ -45,7 +45,7 @@ export class UserManagementComponent implements OnInit {
       Authorization: `Bearer ${token}`,
     });
 
-    this.http.get<UserResponseDTO[]>('http://localhost:8080/api/users', { headers })
+    this.http.get<UserResponseDTO[]>('http://34.148.109.190/be/api/users', { headers })
       .subscribe({
         next: (data) => {
           this.users = data;

@@ -55,7 +55,7 @@ export class PengajuanApprovalComponent implements OnInit {
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.get<PengajuanPendingResponseDTO[]>('http://localhost:8080/api/pengajuan/pending', { headers }).subscribe({
+    this.http.get<PengajuanPendingResponseDTO[]>('http://34.148.109.190/be/api/pengajuan/pending', { headers }).subscribe({
       next: (data) => {
         console.log('Data pending pengajuan:', data); // Pastikan data yang diterima sesuai
         this.pengajuans = this.rows = data;

@@ -11,7 +11,7 @@ interface ChangePasswordRequest {
   providedIn: 'root'
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8080/api/auth';
+  private baseUrl = 'http://34.148.109.190/be/api/auth';
 
   constructor(private http: HttpClient) {}
 
@@ -21,6 +21,6 @@ export class AuthService {
   }
 
   logout() {
-    return this.http.post('http://localhost:8080/api/auth/logout', {});
+    return this.http.post('http://34.148.109.190/be/api/auth/logout', {});
   }
 }

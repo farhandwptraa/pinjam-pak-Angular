@@ -7,7 +7,7 @@ import { PengajuanListResponseDTO, PengajuanPendingResponseDTO } from 'src/app/m
   providedIn: 'root',
 })
 export class PengajuanService {
-  private apiUrl = 'http://localhost:8080/api/pengajuan';
+  private apiUrl = 'http://34.148.109.190/be/api/pengajuan';
 
   constructor(private http: HttpClient) {}
 
@@ -30,7 +30,7 @@ export class PengajuanService {
   }
   
   reviewPengajuan(idPengajuan: string, payload: any): Observable<any> {
-    return this.http.put<any>(`http://localhost:8080/api/pengajuan/${idPengajuan}/review-marketing`, payload, {
+    return this.http.put<any>(`http://34.148.109.190/be/api/pengajuan/${idPengajuan}/review-marketing`, payload, {
         headers: this.getAuthHeaders()
     });
   }
@@ -41,7 +41,7 @@ export class PengajuanService {
   }
 
   approvePengajuan(idPengajuan: string, payload: any): Observable<any> {
-    return this.http.put<any>(`http://localhost:8080/api/pengajuan/${idPengajuan}/review-manager`, payload, {
+    return this.http.put<any>(`http://34.148.109.190/be/api/pengajuan/${idPengajuan}/review-manager`, payload, {
         headers: this.getAuthHeaders()
     });
   }
@@ -53,7 +53,7 @@ export class PengajuanService {
 
   disbursePengajuan(idPengajuan: string): Observable<any> {
     return this.http.put(
-      `http://localhost:8080/api/pengajuan/${idPengajuan}/disburse`,
+      `http://34.148.109.190/be/api/pengajuan/${idPengajuan}/disburse`,
       {}, // body kosong
       { headers: this.getAuthHeaders() }
     );

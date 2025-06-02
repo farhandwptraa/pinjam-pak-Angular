@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class RoleFeatureService {
-  private apiUrl = 'http://localhost:8080/api/role-feature';
+  private apiUrl = 'http://34.148.109.190/be/api/role-feature';
 
   constructor(private http: HttpClient) {}
 
@@ -18,7 +18,7 @@ export class RoleFeatureService {
 
   // Ambil semua role
   getAllRoles(): Observable<Role[]> {
-    return this.http.get<Role[]>('http://localhost:8080/api/employee/roles', {
+    return this.http.get<Role[]>('http://34.148.109.190/be/api/employee/roles', {
       headers: this.getAuthHeaders()
     });
   }

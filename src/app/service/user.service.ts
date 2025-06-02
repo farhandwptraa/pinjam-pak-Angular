@@ -14,7 +14,7 @@ export interface UserResponse {
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8080/api/users'; // ganti kalau beda port
+  private apiUrl = 'http://34.148.109.190/be/api/users'; // ganti kalau beda port
 
   constructor(private http: HttpClient) {}
 

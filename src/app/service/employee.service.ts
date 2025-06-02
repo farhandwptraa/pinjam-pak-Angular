@@ -9,7 +9,7 @@ import { Branch } from '../models/branch.model';
   providedIn: 'root'
 })
 export class EmployeeService {
-  private apiUrl = 'http://localhost:8080/api/employee';
+  private apiUrl = 'http://34.148.109.190/be/api/employee';
 
   constructor(private http: HttpClient) {}
 

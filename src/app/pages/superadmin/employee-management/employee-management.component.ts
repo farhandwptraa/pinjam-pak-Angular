@@ -49,7 +49,7 @@ export class EmployeeManagementComponent implements OnInit {
     this.loading = true;
     const headers = this.getAuthHeaders();
 
-    this.http.get<EmployeeResponseDTO[]>('http://localhost:8080/api/employee', { headers })
+    this.http.get<EmployeeResponseDTO[]>('http://34.148.109.190/be/api/employee', { headers })
       .subscribe({
         next: (data) => {
           this.employees = this.rows = data;
@@ -65,7 +65,7 @@ export class EmployeeManagementComponent implements OnInit {
   fetchBranches(): void {
     const headers = this.getAuthHeaders();
 
-    this.http.get<any[]>('http://localhost:8080/api/employee/branches', { headers })
+    this.http.get<any[]>('http://34.148.109.190/be/api/employee/branches', { headers })
       .subscribe({
         next: (data) => {
           this.branches = data.map(b => ({
@@ -80,7 +80,7 @@ export class EmployeeManagementComponent implements OnInit {
   fetchRoles(): void {
     const headers = this.getAuthHeaders();
 
-    this.http.get<any[]>('http://localhost:8080/api/employee/roles', { headers })
+    this.http.get<any[]>('http://34.148.109.190/be/api/employee/roles', { headers })
       .subscribe({
         next: (data) => {
           this.roles = data.map(r => ({
@@ -117,7 +117,7 @@ export class EmployeeManagementComponent implements OnInit {
       roleName: this.selectedRole
     };
 
-    this.http.put(`http://localhost:8080/api/employee/${this.selectedEmployee.employeeId}`, payload, {
+    this.http.put(`http://34.148.109.190/be/api/employee/${this.selectedEmployee.employeeId}`, payload, {
       headers,
       responseType: 'text'
     }).subscribe({
@@ -162,7 +162,7 @@ export class EmployeeManagementComponent implements OnInit {
   saveNewEmployee(modal: any): void {
     const headers = this.getAuthHeaders();
 
-    this.http.post('http://localhost:8080/api/employee/register', this.newEmployee, { headers, responseType: 'text' })
+    this.http.post('http://34.148.109.190/be/api/employee/register', this.newEmployee, { headers, responseType: 'text' })
       .subscribe({
         next: () => {
           this.fetchEmployees();
